@@ -1,26 +1,29 @@
 #include <iostream>
 #include <string>
 #include <map>
-using namespace std;
 
+int main() {
+    std::map<std::string, int> queue;
+    std::string command;
 
-int main()
-{
-    map<string, int> people;
-    cout << "Enter names (type 'Next' to see the next person, 'exit' to quit):" << endl;
-    while(true) {
-        string person;
-        cin >> person;
-        people.insert(make_pair(person, people.size() + 1));
-        if (person == "Next") {
-            if(people.empty()) {
-                cout << "No more people to display." << endl;
-                continue;
+    while (true) {
+        std::cin >> command;
+
+        if (command == "Next") {
+            if (queue.empty()) {
+                std::cout << "Queue is empty" << std::endl;
+            } else {
+                std::string first_name = queue.begin()->first;
+                std::cout << first_name << std::endl;
+
+                if (--queue[first_name] == 0) {
+                    queue.erase(first_name);
+                }
             }
-            cout << people.begin()->first << endl;
-            people.erase(people.begin()->first);
+        } else {
+            queue[command]++;
         }
-        if(person == "exit") return 0;
     }
 
+    return 0;
 }
